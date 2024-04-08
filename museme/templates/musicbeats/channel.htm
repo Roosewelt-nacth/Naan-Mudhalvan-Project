@@ -1,0 +1,71 @@
+{% extends 'museme/basic.htm' %}
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<style>
+  body {
+    background-color: #000000; /* Black background */
+    color: #FFFFFF; /* White text */
+}
+
+.card {
+    background-color: #191414; /* Dark Spotify green card background */
+    color: #FFFFFF; /* White text */
+    border-color: #1DB954; /* Spotify green border */
+}
+
+.card-title {
+    color: #1DB954; /* Spotify green title */
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.card-text {
+    font-size: 16px;
+    color: #FFFFFF; /* White text */
+}
+
+.btn-outline-danger {
+    color: #FFFFFF; /* White text */
+    border-color: #FFFFFF; /* White border */
+}
+
+.btn-outline-danger:hover {
+    background-color: #FFFFFF; /* White hover color */
+    color: #000000; /* Black text on hover */
+}
+
+</style>
+
+<h2 style="text-align: center; padding-top: 2%; color: rgb(218, 16, 16); font-size: 28px; font-weight: bold;">Channel: {{channel.name}}</h2>
+
+<div class="container">
+{% for i in song reversed %}
+<div class="card mb-3" style="max-width: 940px; margin-top: 20px;">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{i.image}}" class="card-img" alt="..." style="max-height: 200px;">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" style="color: green; font-weight: 600; font-size: 20px;">{{i.name}}</h5>
+          <p class="card-text" style="font-size: 16px;">Tags: {{i.tags}}</p>
+          <p class="card-text" style="font-size: 16px;">Movie: {{i.movie}}</p>
+          {% if user.is_authenticated %}
+          <form action="/museme/history" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="music_id" value="{{i.song_id}}">
+            <a href="/museme/songs/{{i.song_id}}"><button class="btn btn-outline-danger" style="font-size: 16px;">Listen Song</button></a>
+          </form>
+          {% else %}
+          <a href="/museme/songs/{{i.song_id}}"><button class="btn btn-outline-danger" style="font-size: 16px;">Listen Song</button></a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
+</div>
+
+{% endblock %}

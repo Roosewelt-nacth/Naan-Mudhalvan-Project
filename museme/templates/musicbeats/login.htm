@@ -1,0 +1,51 @@
+{% extends 'museme/basic.htm' %}
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        background-color: #212529;
+        color: #dc3545;
+    }
+
+    .container {
+        background-color: #343a40;
+        border-radius: 10px;
+        padding: 30px;
+        margin-top: 50px;
+    }
+
+    .form-group label {
+        color: #fff;
+    }
+
+    .form-control {
+        background-color: #545d68;
+        color: #fff;
+    }
+
+    .btn-primary {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-primary:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+</style>
+
+<div class="container">
+    <form action="/museme/login" method="POST">{% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputEmail1">Username</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" placeholder="Your Username">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+{% endblock %}
